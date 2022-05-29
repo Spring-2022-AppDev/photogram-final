@@ -1,4 +1,42 @@
 Rails.application.routes.draw do
+  # Routes for the Follow request resource:
+
+  # CREATE
+  post("/insert_follow_request", { :controller => "follow_requests", :action => "create" })
+          
+  # READ
+  get("/follow_requests", { :controller => "follow_requests", :action => "index" })
+  
+  get("/follow_requests/:path_id", { :controller => "follow_requests", :action => "show" })
+  
+  # UPDATE
+  
+  post("/modify_follow_request/:path_id", { :controller => "follow_requests", :action => "update" })
+  
+  # DELETE
+  get("/delete_follow_request/:path_id", { :controller => "follow_requests", :action => "destroy" })
+
+  #------------------------------
+
+  # Routes for the Like resource:
+
+  # CREATE
+  post("/insert_like", { :controller => "likes", :action => "create" })
+          
+  # READ
+  get("/likes", { :controller => "likes", :action => "index" })
+  
+  get("/likes/:path_id", { :controller => "likes", :action => "show" })
+  
+  # UPDATE
+  
+  post("/modify_like/:path_id", { :controller => "likes", :action => "update" })
+  
+  # DELETE
+  get("/delete_like/:path_id", { :controller => "likes", :action => "destroy" })
+
+  #------------------------------
+
   # Routes for the Followrequest resource:
 
   # CREATE
