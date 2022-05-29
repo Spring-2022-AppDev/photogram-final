@@ -5,6 +5,13 @@ class ApplicationController < ActionController::Base
     render(:template=>"users/homepage.html.erb")
   end
 
+  def show 
+    @user = User.where(:id=>session.fetch(:user_id)).at(0)
+    @username = @user.username
+    @list_of_photos=Photo.where(:owner_id=>@user.id).order({ :created_at => :desc })
+  render(:template=>"users/show.html.erb")
+  end
+
   def index_users
     users = User.all
     @list_of_users = users.order({ :created_at => :desc })

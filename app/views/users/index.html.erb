@@ -67,7 +67,10 @@
 
         <td>
         <% if session.fetch(:user_id)!=nil %>
-        <a href="/insert_follow_request"> Follow 
+        <form action="/insert_follow_request" method="post">
+        Follow
+
+        
         <%end %>
         </td>
 
