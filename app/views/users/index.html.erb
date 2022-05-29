@@ -1,0 +1,79 @@
+
+
+<div>
+  <div>
+    <table border="1">
+      <tr>
+        <th>
+          Username
+        </th>
+
+        <th>
+          Private?
+        </th>
+
+        <th>
+        </th>
+
+        <% if session.fetch(:user_id)!=nil %>
+        <th>
+        </th>
+        <%end%>
+        <th>
+        
+        </th>
+
+      </tr>
+
+      <% @list_of_users.each do |a_user| %>
+      <tr>
+        <td>
+          <%= a_user.username %>
+        </td>
+
+        <td>
+        <% if a_user.private == true%>
+        Yes 
+        <% else %>
+        No 
+        <%end %> 
+          
+        </td>
+
+        <td> 
+          
+          
+          <% if session.fetch(:user_id)==nil%>
+          
+          <% @follow = Followrequest.where(:sender_id=>session.fetch(:user_id)).where(:recipient_id=>a_user.id).at(0)%>
+          <% if @follow != nil %> 
+          <%= @follow.status %>
+          <%end%>
+
+          
+
+          <%end %>
+        </td>
+
+        <td>
+          <% if session.fetch(:user_id)==nil%>
+          <a href="/user_sign_in"> Show details </a>
+          <%else%>
+          <a href="/users/<%=a_user.id%>"> Show details </a>
+          <% end %>
+        </td>
+        
+
+
+        <td>
+        <% if session.fetch(:user_id)!=nil %>
+        <a href="/insert_follow_request"> Follow 
+        <%end %>
+        </td>
+
+        
+        
+      </tr>
+      <% end %>
+      
+    </table>
