@@ -1,10 +1,14 @@
 Rails.application.routes.draw do
 
-  get("/users/:user_id", :controller=>"application", :action=> "show")
+  
 
   get("/", :controller=>"application", :action=>"index")
   
   get("/users", :controller=>"application", :action=>"index_users")
+
+  get("/users/:user", :controller=>"application", :action=> "show")
+  
+  get("/users/:user/feed", :controller=>"application", :action=> "feed")
 
 
   # Routes for the Follow request resource:
@@ -42,6 +46,7 @@ Rails.application.routes.draw do
   
   # DELETE
   get("/delete_like/:path_id", { :controller => "likes", :action => "destroy" })
+  get("/delete_like", :controller =>"likes", :action=> "destroy")
 
   #------------------------------
 

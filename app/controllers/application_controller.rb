@@ -1,15 +1,26 @@
 class ApplicationController < ActionController::Base
 
+  
   def index
 
     render(:template=>"users/homepage.html.erb")
   end
 
   def show 
+    @username = params.fetch(:user)
+    @user_id = User.where(:username=>@username).at(0).id
+    @list_of_photos=Photo.where(:owner_id=>@user_id)
+
+
+    
+  render(:template=>"users/show.html.erb")
+  end
+
+  def feed
     @user = User.where(:id=>session.fetch(:user_id)).at(0)
     @username = @user.username
     @list_of_photos=Photo.where(:owner_id=>@user.id).order({ :created_at => :desc })
-  render(:template=>"users/show.html.erb")
+    render(:template=>"users/feed.html.erb")
   end
 
   def index_users

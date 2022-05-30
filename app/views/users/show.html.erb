@@ -1,18 +1,41 @@
 
-<%=@user.username%>
+<%= @username%>
 
 <dl>
 Private </dl>
 <dd> 
-<%= @user.private?%> 
+<%= User.where(:id=>@user_id).at(0).private? %> </dd>
+
+
 
 <dl> Followers </dl>
+<dd> <%=FollowRequest.where(:recipient_id=>@user_id).where(:status=>"accepted").count%> </dd>
 
+<% if FollowRequest.where(:recipient_id=>@user_id).where(:sender_id=>session.fetch(:user_id)).where(:status=>"accepted")!=nil%>
+<form action="/insert_follow_request" method="post">
+ <input type="hidden" name="query_recipient_id" value="<%=@user_id%>">
+ <input type="hidden" name="query_sender_id" value="<%=session.fetch(:user_id)%>">
+ <input type="hidden" name="query_status">
 
-<h2>Own photos </h2>
+  <button>
+  Follow
+  </button>
+  <%end%>
+  </form>
+
+  <% if FollowRequest.where(:sender_id=>session.fetch(:user_id)).where(:recipient_id=>@user_id).where(:status=>"accepted").at(0)!=nil %>
+          <a href="/delete_follow_request/<%FollowRequest.where(:sender_id=>session.fetch(:user_id)).where(:recipient_id=>@user_id).where(:status=>"accepted").at(0).id%>"> Unfollow </a>
+  <%end%>
+
+<dl> Following </dl>
+<dd> <%=FollowRequest.where(:sender_id=>@user_id).where(:status=>"accepted").count%> </dd>
+ 
+<h2>Own photos (<%=Photo.where(:owner_id=>@user_id).count %>)
+
 
 <table border="1">
-  <tr>
+
+<tr>
     <th>
       Image
     </th>
@@ -37,27 +60,32 @@ Private </dl>
   </tr>
 
   <%@list_of_photos.each do |a_photo|%>
+
   <tr>
     <td>
-      <img src="<%=a_photo.image%>">
+    <img src="<%=a_photo.image%>"> </img>
+    </td>
+    
+    <td>
+    <% @id = a_photo.owner_id%>
+    <%= User.where(:id=>@id).at(0).username%>
     </td>
 
     <td>
-      <%owner = a_photo.owner_id%>
-      <%=User.where(:user_id=>owner).at(0).username%>
+    <%=a_photo.caption%>
     </td>
 
     <td>
-      <%=a_photo.caption%>
+    <%=time_ago_in_words(a_photo.created_at)%> ago
+    </td>
+    
+    <td>
+    <%=a_photo.likes_count%>
     </td>
 
     <td>
-      <%=time_ago_in_words.a_photo.created_at%>
+    <a href="/photos/<%=a_photo.id%>"> Show details </a>
     </td>
-
-    <td>
-      <%=a_photo.likes_count%>
-    </td>
-<%end%>
-    <td></td>
   </tr>
+  <%end %>
+  

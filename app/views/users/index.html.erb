@@ -83,7 +83,7 @@
           <% if session.fetch(:user_id)==nil%>
           <a href="/user_sign_in"> Show details </a>
           <%else%>
-          <a href="/users/<%=a_user.id%>"> Show details </a>
+          <a href="/users/<%=a_user.username%>"> Show details </a>
           <% end %>
         </td>
         
