@@ -50,12 +50,15 @@
        <%else %>
         <%end %>
 
-        <% if Followrequest.where(:sender_id=>session.fetch(:user_id)).where(:recipient_id=>a_user.id).where(:status=>"pending")%>
-        dsfsdf
+        <% if FollowRequest.where(:sender_id=>session.fetch(:user_id)).where(:recipient_id=>a_user.id).where(:status=>"accepted").at(0)!=nil %>
+          <a href="/delete_follow_request/<%FollowRequest.where(:sender_id=>session.fetch(:user_id)).where(:recipient_id=>a_user.id).where(:status=>"accepted").at(0).id%>"> Unfollow </a>
+
+          <%elsif FollowRequest.where(:sender_id=>session.fetch(:user_id)).where(:recipient_id=>a_user.id).where(:status=>"pending").at(0)!=nil%>
+          Request sent. <a href="/delete_follow_request/<%FollowRequest.where(:sender_id=>session.fetch(:user_id)).where(:recipient_id=>a_user.id).where(:status=>"pending").at(0).id%>"> Cancel </a>
         <%end%>
 
         
-
+        
       
 
 
